@@ -27,9 +27,9 @@ USER root
 
 
 # Dowload Maven from Apache
-RUN yum install -y \
-       java-1.8.0-openjdk-1.8.0.181-3.b13.el7_5 \
-       java-1.8.0-openjdk-devel-1.8.0.181-3.b13.el7_5 \
+RUN curl https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_linux-x64_bin.tar.gz --output jdk-10.0.2_linux-x64_bin.tar.gz \
+  && tar zxf jdk-10.0.2_linux-x64_bin.tar.gz -C /usr/local && mv /usr/local/jdk-10.0.2 /usr/local/jdk-10 && rm jdk-10.0.2_linux-x64_bin.tar.gz \
+  && export JAVA_HOME=/usr/local/jdk-10 && export PATH=$PATH:$JAVA_HOME/bin \
   && curl https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz | \
     tar -xzf - -C /opt \
   && ln -s /opt/apache-maven-3.5.4 /opt/maven \
@@ -38,11 +38,12 @@ RUN yum install -y \
   && useradd -u 1000 -r -g jboss -m -d /opt/jboss -s /sbin/nologin -c "JBoss user" jboss \
   && chmod 755 /opt/jboss
 
-ENV JAVA_HOME /etc/alternatives/jre
+ENV JAVA_HOME="/usr/local/jdk-10" \
+	PATH=$PATH:"/usr/local/jdk-10/bin" 	
 
 
 # Use /dev/urandom to speed up startups & Add jboss user to the root group
-RUN echo securerandom.source=file:/dev/urandom >> /usr/lib/jvm/java/jre/lib/security/java.security \
+RUN echo securerandom.source=file:/dev/urandom >> /usr/local/jdk-10/conf/security/java.security \
  && usermod -g root -G jboss jboss
 
 # Prometheus JMX exporter agent
@@ -90,15 +91,6 @@ RUN chmod 755 /opt/run-java/run-java.sh
 COPY run-env.sh /opt/run-java/run-env.sh
 RUN chmod 755 /opt/run-java/run-env.sh
 
-
-# Copy licenses
-RUN mkdir -p /opt/fuse/licenses
-COPY licenses.css /opt/fuse/licenses
-COPY licenses.xml /opt/fuse/licenses
-COPY licenses.html /opt/fuse/licenses
-COPY apache_software_license_version_2.0-apache-2.0.txt /opt/fuse/licenses
-
-
 # Necessary to permit running with a randomised UID
 RUN mkdir -p /deployments/data \
  && chmod -R "g+rwX" /deployments \
@@ -117,3 +109,5 @@ COPY settings.xml /opt/jboss/.m2/settings.xml
 # Use the run script as default since we are working as an hybrid image which can be
 # used directly to. (If we were a plain s2i image we would print the usage info here)
 CMD [ "/usr/local/s2i/run" ]
+
+EXPOSE 8080
