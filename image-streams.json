@@ -30,7 +30,7 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "fuse-java10",
+        "name": "java10",
         "creationTimestamp": null
       },
       "spec": {
