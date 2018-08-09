@@ -3,29 +3,7 @@
   "apiVersion": "v1",
   "metadata": {},
   "items": [
-    {
-      "kind": "ImageStream",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "fuse-java",
-        "creationTimestamp": null
-      },
-      "spec": {
-        "dockerImageRepository": "fabric8/s2i-java",
-        "tags": [
-          {
-            "name": "latest",
-            "annotations": {
-              "description": "Build and run Fuse Java applications",
-              "iconClass": "icon-fuse-java",
-              "tags": "builder,java,fuse",
-              "supports": "java:8,java",
-              "sampleRepo": "https://github.com/rhuss/sti-camel-cdi"
-            }
-          }
-        ]
-      }
-    },
+    
    {
       "kind": "ImageStream",
       "apiVersion": "v1",
@@ -34,7 +12,7 @@
         "creationTimestamp": null
       },
       "spec": {
-        "dockerImageRepository": "fabric8/s2i-jdk10",
+        "dockerImageRepository": "openshift/s2i-jdk10",
         "tags": [
           {
             "name": "latest",
