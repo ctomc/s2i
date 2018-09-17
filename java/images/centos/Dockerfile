@@ -1,4 +1,4 @@
-FROM centos:7.5.1804
+FROM centos:latest
 
 ENV JOLOKIA_VERSION="1.6.0" \
     PROMETHEUS_JMX_EXPORTER_VERSION="0.3.1" \
@@ -43,7 +43,7 @@ ENV JAVA_HOME="/usr/local/jdk-11" \
 
 
 # Use /dev/urandom to speed up startups & Add jboss user to the root group
-RUN echo securerandom.source=file:/dev/urandom >> /usr/local/jdk-10/conf/security/java.security \
+RUN echo securerandom.source=file:/dev/urandom >> /usr/local/jdk-11/conf/security/java.security \
  && usermod -g root -G jboss jboss
 
 # Prometheus JMX exporter agent
