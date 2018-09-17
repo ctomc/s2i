@@ -8,19 +8,19 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "java10",
+        "name": "java11",
         "creationTimestamp": null
       },
       "spec": {
-        "dockerImageRepository": "openshift/s2i-jdk10",
+        "dockerImageRepository": "openshift/s2i-jdk11",
         "tags": [
           {
             "name": "latest",
             "annotations": {
-              "description": "Build and run Java 10 applications",
-              "iconClass": "icon-fuse-java10",
+              "description": "Build and run Java 11 applications",
+              "iconClass": "icon-fuse-java11",
               "tags": "builder,java",
-              "supports": "java:10,java",
+              "supports": "java:11,java",
               "sampleRepo": "https://github.com/rhuss/sti-camel-cdi"
             }
           }

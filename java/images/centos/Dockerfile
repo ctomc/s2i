@@ -27,9 +27,9 @@ USER root
 
 
 # Dowload Maven from Apache
-RUN curl https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_linux-x64_bin.tar.gz --output jdk-10.0.2_linux-x64_bin.tar.gz \
-  && tar zxf jdk-10.0.2_linux-x64_bin.tar.gz -C /usr/local && mv /usr/local/jdk-10.0.2 /usr/local/jdk-10 && rm jdk-10.0.2_linux-x64_bin.tar.gz \
-  && export JAVA_HOME=/usr/local/jdk-10 && export PATH=$PATH:$JAVA_HOME/bin \
+RUN curl https://download.java.net/java/early_access/jdk11/28/GPL/openjdk-11+28_linux-x64_bin.tar.gz --output openjdk-11+28_linux-x64_bin.tar.gz \
+  && tar zxf openjdk-11+28_linux-x64_bin.tar.gz -C /usr/local && rm openjdk-11+28_linux-x64_bin.tar.gz \
+  && export JAVA_HOME=/usr/local/jdk-11 && export PATH=$PATH:$JAVA_HOME/bin \
   && curl https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz | \
     tar -xzf - -C /opt \
   && ln -s /opt/apache-maven-3.5.4 /opt/maven \
@@ -38,8 +38,8 @@ RUN curl https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413
   && useradd -u 1000 -r -g jboss -m -d /opt/jboss -s /sbin/nologin -c "JBoss user" jboss \
   && chmod 755 /opt/jboss
 
-ENV JAVA_HOME="/usr/local/jdk-10" \
-	PATH=$PATH:"/usr/local/jdk-10/bin" 	
+ENV JAVA_HOME="/usr/local/jdk-11" \
+	PATH=$PATH:"/usr/local/jdk-11/bin"
 
 
 # Use /dev/urandom to speed up startups & Add jboss user to the root group

@@ -3,12 +3,12 @@ fish-pepper:
   params:
     - base
   name: "fabric8/s2i-java"
-  build: "2.3.0"
+  build: "3.0.0"
 
 config:
   base:
     centos:
-      withGradle: true
+      withGradle: false
       from: "centos:7.5.1804"
       user: "jboss"
       home: "/opt/jboss"
